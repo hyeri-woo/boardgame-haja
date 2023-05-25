@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import GlobalStyle from './components/style/GlobalStyle'
+import Footer from './components/common/Footer'
+import LoginSignPage from "./pages/LoginSignPage";
 function App() {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -19,7 +22,9 @@ function App() {
   console.log(data);
   return (
     <div>
-      hello world
+      <GlobalStyle/>
+      <LoginSignPage/>
+      <Footer/>
     </div>
   );
 }
