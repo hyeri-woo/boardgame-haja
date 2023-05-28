@@ -33,18 +33,43 @@ ___
 
 ____
 ## 2. 기술 및 개발 환경
-### 사용 기술
+### 데이터 사용
+`boardgame.json`
+- json server을 통해 `http://localhost:3001/game` 에서 사용하거나 json 파일로 바로 사용할 수 있습니다.
+```
+{
+  "game": [
+    {
+    "name": "글룸헤이븐",
+    "image": "https:\/\/boardlife.co.kr\/data\/boardgame_strategy\/2021\/01\/29\/1611914795-315436_N_170x170_100_5_.jpg",
+    "min_player": "1",
+    "max_player": "4",
+    "play_time": "60-120분",
+    "rate": "8.5",
+    "play_age": "14세 이상",
+    "difficulty": "3.89",
+    "theme": "판타지",
+    "ranking": 1
+    },
+    ...
+}
+```
+
 **json server 사용법**
 1. src 파일 안에 data 폴더를 위치시킵니다. 
-2. 프로젝트 폴더 안에서 json-server를 설치합니다
+2. 프로젝트 폴더 안에서 json-server를 설치합니다.
 ```
 npm i -g json-server
 ```
 3. data 폴더 안에서 json-server를 시작시킵니다. 
 ```
-json-server --watch db.json --port 3001
+json-server --watch boardgame.json --port 3001
 ```
 4. App.js 내 fetchData 함수를 이용해 데이터를 받으시고 사용하시면 됩니다. 
+
+
+
+### 사용 기술
 
 ### 개발 환경
 
