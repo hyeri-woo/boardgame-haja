@@ -11,14 +11,15 @@ const NavLayout = styled.nav`
         display: flex;
         justify-content: center;
         gap: 30px;
-        li {
+        button {
             padding: 10px;
+            width: 80px;
         }
-        li.active {
+        button.active {
             color: black;
             font-weight: bold;
         }
-        li:hover {
+        button:hover {
             background: #b5b5b5;
             color: white;
         }

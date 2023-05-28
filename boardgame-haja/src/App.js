@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import GlobalStyle from './components/style/GlobalStyle'
 import Footer from './components/common/Footer'
 import LoginSignPage from "./pages/LoginSignPage";
+import HomePage from "./pages/HomePage";
+import DetailPage from "./pages/DetailPage"
 function App() {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -21,11 +23,15 @@ function App() {
   }, []);
   console.log(data);
   return (
-    <div>
+    <>
       <GlobalStyle/>
-      <LoginSignPage/>
+      <div className="wrapper">
+        {/* <HomePage/> */}
+        <DetailPage/>
+        {/* <LoginSignPage/> */}
+      </div>
       <Footer/>
-    </div>
+    </>
   );
 }
 export default App;

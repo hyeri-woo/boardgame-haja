@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-const LogoStyle = styled.h1`
+const BigLogoStyle = styled.h1`
     color: #58A942;
     font-weight: bold;
     font-size: 30px;
@@ -8,8 +8,25 @@ const LogoStyle = styled.h1`
     padding-bottom: 20px;
 `
 
-export default function Logo() {
+const SmallLogoStyle = styled(BigLogoStyle)`
+    color: #58A942;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    padding-bottom: 5px;
+`
+
+function BigLogo() {
     return (
-        <LogoStyle>BOARDGAME HAJA</LogoStyle>
+        <BigLogoStyle>BOARDGAME HAJA</BigLogoStyle>
     )
 }
+
+function SmallLogo() {
+    return (
+        <SmallLogoStyle>BOARDGAME HAJA</SmallLogoStyle>
+    )
+}
+
+
+export {BigLogo, SmallLogo};

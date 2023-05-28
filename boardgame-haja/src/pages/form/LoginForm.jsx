@@ -9,6 +9,7 @@ export default function LoginPage() {
     });
     return (
         <FormLayout>
+            <h2 className="a11y-hidden">로그인 폼</h2>
             <label htmlFor="inputEmail">이메일</label>
             <input id="inputEmail" className="input-email" type="email"/>
             <label htmlFor="inputPw">비밀번호</label>
