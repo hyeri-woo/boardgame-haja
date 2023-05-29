@@ -1,13 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PageLayout from '../components/style/PageLayout'
-import NavLayout from '../components/style/NavLayout'
 import MainLayout from '../components/style/MainLayout'
 import Card from '../components/common/Card'
-import SearchBox from '../components/common/SearchBox'
-import Filter from '../components/common/Filter'
 import Pagination from '../components/common/Pagination'
-import LoginSign from '../components/common/LoginSign'
 import styled from "styled-components";
+import Header from '../components/common/Header'
+import { fetchData } from '../data/fetchData'
+import { useParams } from 'react-router-dom'
 
 const ItemListStyle = styled.ul`
     display: grid;
@@ -15,10 +14,12 @@ const ItemListStyle = styled.ul`
     gap: 15px;
 `
 
-function ItemList() {
+function ItemList({currPage, data}) {
     const itemList = [];
-    for(let i=0; i<8; i++) {
-        itemList.push(<li><Card/></li>)
+    for(let i=(currPage-1)*8; i<currPage*8; i++) {
+        itemList.push(<li key={data[i]?.ranking}>
+            <Card data={data[i]}/>
+        </li>)
     }
     return (
         <ItemListStyle>
@@ -28,28 +29,31 @@ function ItemList() {
 }
 
 export default function HomePage() {
-    const [isFilter, setFilter] = useState(false);
-    const filterToggle = () => {
-        setFilter(prev=>!prev);
-    }
+    const [filter, setFilter] = useState(false);
+    const [currPage, setCurrPage] = useState(1);
+    const [data, setData] = useState([]);
+    const {page} = useParams();
+    useEffect(() => {
+        const getData = async() => {
+            const db = await fetchData();
+            setData(db);
+        }
+        getData();
+    }, []);
+    useEffect(() => {
+        if(!page) {
+            setCurrPage(1);
+        } else {
+            setCurrPage(page);
+        }
+    }, [page]);
     return (
         <PageLayout>
-            <header>
-                <SearchBox/>
-                <LoginSign/>
-                <NavLayout>
-                    <ul>
-                        <li><button className="active" type="button">랭킹순</button></li>
-                        <li><button type="button">카테고리별</button></li>
-                        <li><button type="button" onClick={filterToggle}>필터 <span> {isFilter?"-":"+"}</span></button></li>
-                    </ul>
-                    {!isFilter || <Filter/>}
-                </NavLayout>
-            </header>
+            <Header search/>
             <MainLayout>
                 <h2 className="a11y-hidden">랭킹순</h2>
-                <ItemList/>
-                <Pagination/>
+                <ItemList currPage={currPage} data={data}/>
+                <Pagination currPage={currPage} setCurrPage={setCurrPage}/>
             </MainLayout>
         </PageLayout>
     )
