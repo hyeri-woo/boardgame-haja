@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const CardStyle = styled.article`
@@ -54,24 +55,33 @@ const CardStyle = styled.article`
         width: 50%;
         box-sizing: border-box;
         padding: 12px;
+        border-right: 1px solid #BDBDBD;
+    }
+    .option button:hover {
+        background: #BDBDBD;
+    }
+    .heart {
+        background: url("../assets/image/empty-heart.svg") no-repeat 0 0 / 1em;
     }
 `
 
-export default function Card() {
-    const heartIcon = "../../assets/image/empty-heart.svg";
+export default function Card({data}) {
+    // const heartIcon = "../../assets/image/search-icon.svg";
+    const player = `${data?.min_player}-${data?.max_player}명` 
+    const navigate = useNavigate();
     return (
         <CardStyle>
-            <img src="image" className="thumbnail"/>
-            <h3>제목</h3>
+            <img src={data?.image} alt="" className="thumbnail"/>
+            <h3 className="ellipsis">{data?.name}</h3>
             <ul>
-                <li><span>인원</span> 판타지</li>
-                <li class="grade"><span>평점</span> 9.05</li>
-                <li><span>장르</span> 2021.03.27</li>
-                <li><span>플레이 타임</span> 15분</li>
+                <li><span>인원</span> {player}</li>
+                <li className="grade"><span>평점</span> {data?.rate}</li>
+                <li><span>테마</span> {data?.theme}</li>
+                <li><span>플레이 타임</span> {data?.play_time}</li>
             </ul>
-            <div class="option">
-                <button type="button"><img src={heartIcon}/>찜하기</button>
-                <button type="button">상세정보</button>
+            <div className="option">
+                <button type="button"><span className="heart"/>찜하기</button>
+                <button type="button" onClick={() => navigate(`/detail/${data?.ranking}`)}>상세정보</button>
             </div>
         </CardStyle>
     )

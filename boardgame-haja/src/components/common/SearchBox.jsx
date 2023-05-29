@@ -28,9 +28,9 @@ export default function SearchBox() {
         <>
             <SmallLogo/>
             <SearchFormStyle>
-                <label htmlFor="inputSearch" class="a11y-hidden">검색창</label>
+                <label htmlFor="inputSearch" className="a11y-hidden">검색창</label>
                 <input type="text" id="inputSearch" placeholder="보드게임을 검색해보세요."/>
-                <button type="submit"><img src={searchIcon}/></button>
+                <button type="submit"><img src={searchIcon} alt=""/></button>
             </SearchFormStyle>
         </>
     )
