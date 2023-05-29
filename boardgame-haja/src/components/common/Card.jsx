@@ -81,7 +81,7 @@ export default function Card({data}) {
             </ul>
             <div className="option">
                 <button type="button"><span className="heart"/>찜하기</button>
-                <button type="button" onClick={() => navigate(`/detail/${data?.ranking}`)}>상세정보</button>
+                <button type="button" onClick={() => navigate(`/detail/${data?.id}`)}>상세정보</button>
             </div>
         </CardStyle>
     )

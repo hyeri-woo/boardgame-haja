@@ -17,7 +17,7 @@ const ItemListStyle = styled.ul`
 function ItemList({currPage, data}) {
     const itemList = [];
     for(let i=(currPage-1)*8; i<currPage*8; i++) {
-        itemList.push(<li key={data[i]?.ranking}>
+        itemList.push(<li key={data[i]?.id}>
             <Card data={data[i]}/>
         </li>)
     }
@@ -47,6 +47,7 @@ export default function HomePage() {
             setCurrPage(page);
         }
     }, [page]);
+    console.log(data);
     return (
         <PageLayout>
             <Header search/>

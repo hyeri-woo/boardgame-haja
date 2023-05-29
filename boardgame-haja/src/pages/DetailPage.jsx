@@ -17,6 +17,7 @@ export default function DetailPage() {
     }
     getData();
   }, []);
+  console.log(data);
   const player = `${data?.min_player}-${data?.max_player}명`
   return (
     <PageLayout>
@@ -28,7 +29,7 @@ export default function DetailPage() {
             </ImageWrapperStyle>
             <InfoWrapperStyle>
               <div class="title-wrapper">
-                <span className="ranking">#{data?.ranking}</span>
+                <span className="ranking">#{data?.id}</span>
                 <h3 style={{fontSize:"40px", fontWeight:"bold"}}>{data?.name}</h3>
               </div>
               <ul>
