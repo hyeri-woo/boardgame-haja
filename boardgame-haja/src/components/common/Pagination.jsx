@@ -59,22 +59,25 @@ export default function Pagination({currPage, setCurrPage, numData}) {
     const navigate = useNavigate();
     const pageCnt = Math.ceil(numData/8);
     const location = decodeURI(useLocation().pathname);
+
+    /*  */
     useEffect(() => {
-        if(startPage >= 1 && startPage <= pageCnt-5) {
+        if(startPage >= 1) {
             btnGroup.forEach(item => {
                 if(item.textContent == currPage) {
                     item.classList.add("active");
-                }
+                } 
             })
         }
     }, [startPage])
 
+    /*  */
     useEffect(() => {
-        if(startPage >= 1 && startPage <= pageCnt-5) {
+        if(startPage >= 1) {
             btnGroup.forEach(item => {
                 if(item.textContent == currPage) {
                     item.classList.add("active");
-                }
+                } 
             })
         }
         if(currPage-startPage >= 5) {
@@ -84,14 +87,29 @@ export default function Pagination({currPage, setCurrPage, numData}) {
                 setStartPage(currPage-(currPage%5-1));
             }
         }
+        if(currPage === "1") {
+            setStartPage(1);
+        }
     }, [currPage])
 
+    /* 검색 후 currPage와 startPage 1로 리셋 */
+    useEffect(() => {
+        const locArr = location.split("/");
+        if(locArr[1] === "search" && locArr.length === 3) {
+            setCurrPage(1);
+            removeActivePage();
+            setStartPage(1);
+        }
+    }, [location])
+
+    /* 모든 number 버튼의 active 삭제 */
     const removeActivePage = () => {
         btnGroup.forEach(item => {
             item.classList.remove("active");
         })
     }
 
+    /* < 버튼 클릭 이벤트 핸들러 */
     const decrementPage = (event) => {
         if(startPage > 1) {
             setStartPage(prev => prev-5);
@@ -99,6 +117,7 @@ export default function Pagination({currPage, setCurrPage, numData}) {
         }
     }
 
+    /* > 버튼 클릭 이벤트 핸들러 */
     const incrementPage = (event) => {
         if(startPage < pageCnt-5) {
             setStartPage(prev => prev+5);
@@ -106,10 +125,16 @@ export default function Pagination({currPage, setCurrPage, numData}) {
         }
     }
 
+    /** number 버튼 클릭 이벤트 핸들러 
+     * 1) currPage 현재 number 버튼으로 변경
+     * 2) 모든 number 버튼 active 삭제
+     * 3) currPage 버튼에만 active 추가
+     * 4) routes에 page number 추가 후 navigate
+    */
     const activePage = (event) => {
         setCurrPage(event.target.textContent);
-        removeActivePage()
-        event.target.classList.toggle("active");
+        removeActivePage();
+        event.target.classList.add("active");
         if(location.split("/")[1] === "search") {
             navigate(`/${location.split("/")[1]}/${location.split("/")[2]}/${event.target.textContent}`);
         } else if(location.split("/")[1] === "ranking") {

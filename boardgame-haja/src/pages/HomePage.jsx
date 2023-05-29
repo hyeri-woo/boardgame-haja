@@ -40,7 +40,6 @@ export default function HomePage() {
     const [data, setData] = useState([]);
     const {page} = useParams();
     const location = decodeURI(useLocation().pathname);
-    // console.log(location);
     useEffect(() => {
         const getData = async() => {
             const db = await fetchData();
@@ -57,9 +56,7 @@ export default function HomePage() {
     }, [page]);
     useEffect(() => {
         const getData = async() => {
-            console.log(location.split("/"));
             if(location.split("/")[1] === "search") {
-                console.log(location.split("/")[2]);
                 const db = await getDataByKeyword(location.split("/")[2]);
                 setData(db);
             } else if(location.split("/")[1] === "ranking") {
@@ -68,7 +65,6 @@ export default function HomePage() {
             }
         }
         getData();
-        console.log(data);
     }, [location])
     return (
         <PageLayout>

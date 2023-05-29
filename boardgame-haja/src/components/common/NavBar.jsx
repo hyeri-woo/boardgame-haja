@@ -68,7 +68,7 @@ export default function NavBar({signin, mypage}) {
     return (
         <NavStyle>
             <ul>
-                <li><button type="button" onClick={activeNavigate("ranking")}>랭킹순</button></li>
+                <li><button type="button" onClick={activeNavigate("ranking/1")}>랭킹순</button></li>
                 <li><button type="button">카테고리별</button></li>
                 <li><button type="button" onClick={filterToggle}>필터 <span> {isFilter?"-":"+"}</span></button></li>
             </ul>
