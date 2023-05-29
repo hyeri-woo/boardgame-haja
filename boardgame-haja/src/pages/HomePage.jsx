@@ -62,6 +62,9 @@ export default function HomePage() {
                 console.log(location.split("/")[2]);
                 const db = await getDataByKeyword(location.split("/")[2]);
                 setData(db);
+            } else if(location.split("/")[1] === "ranking") {
+                const db = await fetchData();
+                setData(db);
             }
         }
         getData();
@@ -73,7 +76,7 @@ export default function HomePage() {
             <MainLayout>
                 <h2 className="a11y-hidden">랭킹순</h2>
                 <ItemList currPage={currPage} data={data}/>
-                <Pagination currPage={currPage} setCurrPage={setCurrPage}/>
+                <Pagination currPage={currPage} setCurrPage={setCurrPage} numData={data.length}/>
             </MainLayout>
         </PageLayout>
     )

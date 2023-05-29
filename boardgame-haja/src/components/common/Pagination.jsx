@@ -24,19 +24,27 @@ const PaginationStyle = styled.div`
         display: flex;
         gap: 10px;
     }
-    button:hover {
+    button:not(:disabled):hover {
         background: #ECECEC;
     }
     .active {
         background: #A0D792;
         color: white;
     }
+    button:disabled {
+        color: #dddddd;
+        cursor: initial;
+    }
 `
 
-function NumberButton({start, onClickBtn}) {
+function NumberButton({start, onClickBtn, pageCnt}) {
     const numList = [];
     for(let i=start; i<start+5; i++) {
-        numList.push(<button type="button" onClick={onClickBtn}>{i}</button>)
+        if(i > pageCnt ){
+            numList.push(<button type="button" onClick={onClickBtn} disabled>{i}</button>)
+        } else {
+            numList.push(<button type="button" onClick={onClickBtn}>{i}</button>)
+        }
     }
     return (
         <>
@@ -45,12 +53,14 @@ function NumberButton({start, onClickBtn}) {
     )
 }
 
-export default function Pagination({currPage, setCurrPage}) {
+export default function Pagination({currPage, setCurrPage, numData}) {
     const [startPage, setStartPage] = useState(1);
     const btnGroup = document.querySelectorAll(".btn-numbers button");
     const navigate = useNavigate();
+    const pageCnt = Math.ceil(numData/8);
+    const location = decodeURI(useLocation().pathname);
     useEffect(() => {
-        if(startPage >= 1 && startPage <= 58) {
+        if(startPage >= 1 && startPage <= pageCnt-5) {
             btnGroup.forEach(item => {
                 if(item.textContent == currPage) {
                     item.classList.add("active");
@@ -60,7 +70,7 @@ export default function Pagination({currPage, setCurrPage}) {
     }, [startPage])
 
     useEffect(() => {
-        if(startPage >= 1 && startPage <= 58) {
+        if(startPage >= 1 && startPage <= pageCnt-5) {
             btnGroup.forEach(item => {
                 if(item.textContent == currPage) {
                     item.classList.add("active");
@@ -90,7 +100,7 @@ export default function Pagination({currPage, setCurrPage}) {
     }
 
     const incrementPage = (event) => {
-        if(startPage < 58) {
+        if(startPage < pageCnt-5) {
             setStartPage(prev => prev+5);
             removeActivePage()
         }
@@ -100,13 +110,17 @@ export default function Pagination({currPage, setCurrPage}) {
         setCurrPage(event.target.textContent);
         removeActivePage()
         event.target.classList.toggle("active");
-        navigate(`/ranking/${event.target.textContent}`);
+        if(location.split("/")[1] === "search") {
+            navigate(`/${location.split("/")[1]}/${location.split("/")[2]}/${event.target.textContent}`);
+        } else if(location.split("/")[1] === "ranking") {
+            navigate(`/${location.split("/")[1]}/${event.target.textContent}`);
+        }
     }
     return (
         <PaginationStyle>
             <button type="button" onClick={decrementPage}>&#60;</button>
                 <div className="btn-numbers">
-            <NumberButton start={startPage} onClickBtn={activePage}/>
+            <NumberButton start={startPage} onClickBtn={activePage} pageCnt={pageCnt}/>
             </div>
             <button type="button" onClick={incrementPage}>&#62;</button>
         </PaginationStyle>
