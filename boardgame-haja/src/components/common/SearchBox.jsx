@@ -1,6 +1,8 @@
 import {SmallLogo} from './Logo'
 import styled from "styled-components"
 import searchIcon from "../../assets/image/search-icon.svg"
+import { getDataByKeyword } from '../../data/fetchData'
+import { useNavigate } from 'react-router-dom'
 
 const SearchFormStyle = styled.form`
     text-align: center;
@@ -23,11 +25,18 @@ const SearchFormStyle = styled.form`
     }
 `
 
-export default function SearchBox() {
+export default function SearchBox({setData}) {
+    const navigate = useNavigate();
+    const onSearch = (event) => {
+        event.preventDefault();
+        const keyword = event.target.querySelector("#inputSearch").value;
+        event.target.querySelector("#inputSearch").value = null;
+        navigate(`../search/${keyword}`)
+    }
     return (
         <>
             <SmallLogo/>
-            <SearchFormStyle>
+            <SearchFormStyle onSubmit={onSearch}>
                 <label htmlFor="inputSearch" className="a11y-hidden">검색창</label>
                 <input type="text" id="inputSearch" placeholder="보드게임을 검색해보세요."/>
                 <button type="submit"><img src={searchIcon} alt=""/></button>

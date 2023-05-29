@@ -11,6 +11,7 @@ export default function Router() {
                 <Route path="/" element={<HomePage />}/>
                 <Route path="/ranking" element={<HomePage/>}/>
                 <Route path="/ranking/:page" element={<HomePage/>}/>
+                <Route path="/search/:keyword" element={<HomePage/>}/>
                 <Route path="/category" element={<HomePage/>}/>
                 <Route path="/login" element={<LoginSignPage login/>}/>
                 <Route path="/signup" element={<LoginSignPage/>}/>

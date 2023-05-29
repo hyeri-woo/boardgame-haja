@@ -12,8 +12,6 @@ async function fetchData() {
 }
 
 async function getDataById(id) {
-    // const data = await fetchData();
-    // return data[id-1];
     try {
         const response = await fetch(`http://localhost:3001/game/${id}`);
         if(!response.ok) {
@@ -26,5 +24,18 @@ async function getDataById(id) {
     }
 }
 
-export {fetchData, getDataById};
+async function getDataByKeyword(keyword) {
+    try {
+        const response = await fetch(`http://localhost:3001/game?name_like=${keyword}`);
+        if(!response.ok) {
+            throw new Error("failed to retrieve boardgame.json");
+        }
+        const json = await response.json();
+        return json;
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+export {fetchData, getDataById, getDataByKeyword};
 

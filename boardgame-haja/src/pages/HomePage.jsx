@@ -5,8 +5,8 @@ import Card from '../components/common/Card'
 import Pagination from '../components/common/Pagination'
 import styled from "styled-components";
 import Header from '../components/common/Header'
-import { fetchData } from '../data/fetchData'
-import { useParams } from 'react-router-dom'
+import { fetchData, getDataByKeyword } from '../data/fetchData'
+import { useParams, useLocation } from 'react-router-dom'
 
 const ItemListStyle = styled.ul`
     display: grid;
@@ -16,7 +16,13 @@ const ItemListStyle = styled.ul`
 
 function ItemList({currPage, data}) {
     const itemList = [];
-    for(let i=(currPage-1)*8; i<currPage*8; i++) {
+    let pageCnt = 0;
+    if(data.length < currPage*8) {
+        pageCnt = data.length;
+    } else {
+        pageCnt = currPage*8;
+    }
+    for(let i=(currPage-1)*8; i < pageCnt; i++) {
         itemList.push(<li key={data[i]?.id}>
             <Card data={data[i]}/>
         </li>)
@@ -33,6 +39,8 @@ export default function HomePage() {
     const [currPage, setCurrPage] = useState(1);
     const [data, setData] = useState([]);
     const {page} = useParams();
+    const location = decodeURI(useLocation().pathname);
+    // console.log(location);
     useEffect(() => {
         const getData = async() => {
             const db = await fetchData();
@@ -47,10 +55,21 @@ export default function HomePage() {
             setCurrPage(page);
         }
     }, [page]);
-    console.log(data);
+    useEffect(() => {
+        const getData = async() => {
+            console.log(location.split("/"));
+            if(location.split("/")[1] === "search") {
+                console.log(location.split("/")[2]);
+                const db = await getDataByKeyword(location.split("/")[2]);
+                setData(db);
+            }
+        }
+        getData();
+        console.log(data);
+    }, [location])
     return (
         <PageLayout>
-            <Header search/>
+            <Header setData={setData} search/>
             <MainLayout>
                 <h2 className="a11y-hidden">랭킹순</h2>
                 <ItemList currPage={currPage} data={data}/>
