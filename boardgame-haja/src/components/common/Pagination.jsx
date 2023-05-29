@@ -67,6 +67,13 @@ export default function Pagination({currPage, setCurrPage}) {
                 }
             })
         }
+        if(currPage-startPage >= 5) {
+            if(currPage%5===0) {
+                setStartPage(currPage-4);
+            } else {
+                setStartPage(currPage-(currPage%5-1));
+            }
+        }
     }, [currPage])
 
     const removeActivePage = () => {
