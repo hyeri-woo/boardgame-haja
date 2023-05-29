@@ -8,17 +8,6 @@ const DetailMainLayout = styled(MainLayout)`
     gap: 40px;
 `
 
-const DetailHeader = styled.header`
-    h2 {
-        text-align: center;
-        padding: 10px;
-    }
-    .btn-back {
-        font-size: 20px;
-        transform: translate(0px, 45px);
-    }
-`
-
 const ImageWrapperStyle = styled.div`
     display: flex;
     flex-direction: column;
@@ -86,4 +75,4 @@ const InfoWrapperStyle = styled.div`
     }
 `
 
-export {DetailHeader, DetailMainLayout, ImageWrapperStyle, InfoWrapperStyle}
+export {DetailMainLayout, ImageWrapperStyle, InfoWrapperStyle}
